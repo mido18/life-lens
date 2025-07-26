@@ -3,7 +3,7 @@ import { UserInput, ReportData } from '../types/user';
 
 // Initialize Google Gemini API
 const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY!);
-const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
+const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash' });
 
 // Prompt templates for report generation
 const FREE_REPORT_PROMPT = (input: UserInput) => `

@@ -88,12 +88,14 @@ const ReportPage: NextPage<ReportPageProps> = ({ report, error }) => {
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   try {
     const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/report?id=${params?.id}`);
+    console.log(response);
     if (!response.ok) {
       return { props: { error: 'Report not found' } };
     }
     const report = await response.json();
     return { props: { report } };
   } catch (err) {
+    console.log(err);
     return { props: { error: 'Failed to load report' } };
   }
 };
