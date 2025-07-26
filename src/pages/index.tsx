@@ -26,8 +26,8 @@ const Home: NextPage = () => {
       dreamDestination: '',
       fateVsPath: '',
     },
-    isPremium: true,
-    content: 'Unlock a detailed 1,000+ word premium report for deeper insights!',
+    isPremium: false,
+    content: '',
   };
 
   // Handle form submission
