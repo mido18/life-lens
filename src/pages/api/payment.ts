@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import Stripe from 'stripe';
-import { kv } from '@vercel/kv';
+import { createClient } from 'redis';
 import { generateReport } from '../../utils/ai';
 import { ReportData } from '../../types/user';
 
@@ -11,14 +11,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
-
+  const redis =  await createClient({ url: process.env.REDIS_URL }).connect();
   const { reportId } = req.body;
   try {
-    const report = await kv.get<ReportData>(`report:${reportId}`);
-    if (!report) {
+    const reportStr = await redis.get(`report:${reportId}`);
+    if (!reportStr) {
       return res.status(404).json({ error: 'Report not found' });
     }
-
+    const report: ReportData = JSON.parse(reportStr);
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
       line_items: [
@@ -38,10 +38,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     // Generate and store premium report
     const premiumReport = await generateReport(report.input, true);
-    await kv.set(`report:${reportId}`, premiumReport, { ex: 60 * 60 * 24 * 7 }); // Store for 7 days
+    await redis.set(`report:${reportId}`, JSON.stringify(premiumReport), { EX: 60 * 60 * 24 * 7 }); // Store for 7 days
 
     return res.status(200).json({ sessionId: session.id });
   } catch (err) {
+    console.log(err);
     return res.status(500).json({ error: 'Payment processing failed' });
   }
 }

@@ -30,6 +30,7 @@ const ReportPage: NextPage<ReportPageProps> = ({ report, error }) => {
       const stripe = await stripePromise;
       await stripe!.redirectToCheckout({ sessionId });
     } catch (err) {
+      console.log(err);
       setPaymentError('Payment failed. Please try again.');
     }
   };
