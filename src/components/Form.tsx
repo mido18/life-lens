@@ -33,7 +33,7 @@ const Form: React.FC<FormProps> = ({ onSubmit }) => {
           type="text"
           name="name"
           required
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-lg px-4 py-3"
         />
       </div>
       <div>
@@ -41,7 +41,7 @@ const Form: React.FC<FormProps> = ({ onSubmit }) => {
         <select
           name="ageRange"
           required
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-lg px-4 py-3"
         >
           <option value="">Select</option>
           <option value="Under 18">Under 18</option>
@@ -56,7 +56,7 @@ const Form: React.FC<FormProps> = ({ onSubmit }) => {
         <select
           name="biggestGoal"
           required
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-lg px-4 py-3"
         >
           <option value="">Select</option>
           <option value="Career Success">Career Success</option>
@@ -73,7 +73,7 @@ const Form: React.FC<FormProps> = ({ onSubmit }) => {
           type="text"
           name="personalityWord"
           required
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-lg px-4 py-3"
         />
       </div>
       <div>
@@ -81,7 +81,7 @@ const Form: React.FC<FormProps> = ({ onSubmit }) => {
         <select
           name="currentMood"
           required
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-lg px-4 py-3"
         >
           <option value="">Select</option>
           <option value="Excited">Excited</option>
@@ -95,7 +95,7 @@ const Form: React.FC<FormProps> = ({ onSubmit }) => {
         <label className="block text-sm font-medium text-gray-700">Challenge (Optional)</label>
         <textarea
           name="challenge"
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-lg px-4 py-3"
         />
       </div>
       <div>
@@ -107,7 +107,7 @@ const Form: React.FC<FormProps> = ({ onSubmit }) => {
                 type="checkbox"
                 name="areaOfFocus"
                 value={focus}
-                className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                className="h-5 w-5 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
               />
               <span className="ml-2 text-sm text-gray-700">{focus}</span>
             </label>
@@ -119,7 +119,7 @@ const Form: React.FC<FormProps> = ({ onSubmit }) => {
         <select
           name="riskComfortLevel"
           required
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-lg px-4 py-3"
         >
           <option value="">Select</option>
           <option value="Low">Low</option>
@@ -133,7 +133,7 @@ const Form: React.FC<FormProps> = ({ onSubmit }) => {
           type="text"
           name="dreamDestination"
           required
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-lg px-4 py-3"
         />
       </div>
       <div>
@@ -141,7 +141,7 @@ const Form: React.FC<FormProps> = ({ onSubmit }) => {
         <select
           name="fateVsPath"
           required
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-lg px-4 py-3"
         >
           <option value="">Select</option>
           <option value="Fate">Fate</option>
