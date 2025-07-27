@@ -11,7 +11,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
-  const redis =  await createClient({ url: process.env.REDIS_URL }).connect();
+  // Create Redis client and connect
+  const redis = createClient({ url: process.env.REDIS_URL });
+  await redis.connect();
+  // Extract origin/host header if needed
+  const origin = (req.headers.origin ?? req.headers.host) as string | undefined;
   const { reportId } = req.body;
   try {
     const reportStr = await redis.get(`report:${reportId}`);
@@ -23,17 +27,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       payment_method_types: ['card'],
       line_items: [
         {
-          price_data: {
-            currency: 'usd',
-            product_data: { name: 'LifeLens Premium Report' },
-            unit_amount: 1000, // $10.00
-          },
+          price: 'price_1RpPYjEp1GiSPrAVWLHxRHLV',
           quantity: 1,
         },
       ],
+      metadata: {
+        reportId,
+      },
       mode: 'payment',
-      success_url: `${process.env.NEXT_PUBLIC_BASE_URL}/report/${reportId}`,
-      cancel_url: `${process.env.NEXT_PUBLIC_BASE_URL}/report/${reportId}`,
+      success_url: `${origin}/report/${reportId}`,
+      cancel_url: `${origin}/report/${reportId}`,
     });
 
     // Generate and store premium report
