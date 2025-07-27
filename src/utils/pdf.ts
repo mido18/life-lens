@@ -3,10 +3,14 @@ import { ReportData } from '../types/user';
 
 // Helper to add a new section header and optionally start a new page if needed
 function addSectionHeader(doc: jsPDF, title: string, y: number): number {
-  // If we are close to bottom, add a new page
-  if (y > 270) {
+  // Calculate bottom margin dynamically (60pt)
+  const pageHeight = doc.internal.pageSize.getHeight();
+  const bottomMargin = 60;
+
+  // If we are close to the bottom, add a new page
+  if (y > pageHeight - bottomMargin) {
     doc.addPage();
-    y = 20;
+    y = 40; // reset y with top margin
   }
   doc.setFontSize(14);
   doc.setFont('helvetica', 'bold');
