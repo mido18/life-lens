@@ -15,8 +15,28 @@ const Report: React.FC<ReportProps> = ({ report }) => {
     );
   }
 
-  // With the above guard, `sections` is guaranteed to exist when needed
-  const sections = report.sections!;
+  // With the above guard, `sections` exists – but it may contain the entire JSON string
+  // if the AI failed to return parsed JSON and our backend stored it as a single string.
+  let sections: any = report.sections!;
+
+  // If the introduction field looks like raw JSON (or contains it), attempt to parse and
+  // overwrite `sections` so each field is available individually.
+  if (
+    report.isPremium &&
+    typeof sections.introduction === 'string' &&
+    sections.introduction.includes('{') &&
+    sections.introduction.includes('"introduction"')
+  ) {
+    try {
+      const jsonStart = sections.introduction.indexOf('{');
+      const jsonEnd = sections.introduction.lastIndexOf('}') + 1;
+      const jsonStr = sections.introduction.slice(jsonStart, jsonEnd);
+      const parsed = JSON.parse(jsonStr);
+      sections = parsed;
+    } catch (err) {
+      console.warn('Failed to parse embedded JSON in premium report:', err);
+    }
+  }
 
   return (
     <div className="bg-white p-6 rounded-lg shadow-md">
