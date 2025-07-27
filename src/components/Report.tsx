@@ -17,7 +17,8 @@ const Report: React.FC<ReportProps> = ({ report }) => {
 
   // With the above guard, `sections` exists – but it may contain the entire JSON string
   // if the AI failed to return parsed JSON and our backend stored it as a single string.
-  let sections: any = report.sections!;
+  type Sections = NonNullable<ReportData['sections']>;
+  let sections: Sections = report.sections!;
 
   // If the introduction field looks like raw JSON (or contains it), attempt to parse and
   // overwrite `sections` so each field is available individually.
@@ -31,7 +32,7 @@ const Report: React.FC<ReportProps> = ({ report }) => {
       const jsonStart = sections.introduction.indexOf('{');
       const jsonEnd = sections.introduction.lastIndexOf('}') + 1;
       const jsonStr = sections.introduction.slice(jsonStart, jsonEnd);
-      const parsed = JSON.parse(jsonStr);
+      const parsed = JSON.parse(jsonStr) as Sections;
       sections = parsed;
     } catch (err) {
       console.warn('Failed to parse embedded JSON in premium report:', err);

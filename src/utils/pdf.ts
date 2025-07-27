@@ -59,7 +59,8 @@ export function generatePDF(report: ReportData) {
   }
 
   // Handle case where introduction field contains embedded JSON (same logic as Report component)
-  let sections: any = report.sections;
+  type Sections = NonNullable<ReportData['sections']>;
+  let sections: Sections = report.sections as Sections;
   if (
     typeof sections.introduction === 'string' &&
     sections.introduction.includes('{') &&
@@ -69,7 +70,7 @@ export function generatePDF(report: ReportData) {
       const jsonStart = sections.introduction.indexOf('{');
       const jsonEnd = sections.introduction.lastIndexOf('}') + 1;
       const jsonStr = sections.introduction.slice(jsonStart, jsonEnd);
-      sections = JSON.parse(jsonStr);
+      sections = JSON.parse(jsonStr) as Sections;
     } catch {
       /* ignore parse failure */
     }

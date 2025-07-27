@@ -45,7 +45,7 @@ const Home: NextPage = () => {
       } else {
         setError('Failed to generate report. Please try again.');
       }
-    } catch (err) {
+    } catch (_err) {
       setError('An error occurred. Please try again.');
     }
   };

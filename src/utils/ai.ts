@@ -43,7 +43,7 @@ export async function generateReport(input: UserInput, isPremium: boolean): Prom
     if (isPremium) {
       try {
         premiumSections = JSON.parse(raw);
-      } catch (e) {
+      } catch (_e) {
         console.warn('Failed to parse JSON from Gemini, falling back to entire text');
       }
     }
@@ -71,7 +71,7 @@ export async function generateReport(input: UserInput, isPremium: boolean): Prom
           }
         : { content: content }),
     };
-  } catch (err) {
+  } catch (_err) {
     // Fallback rule-based generator
     const fallbackContent = `
       ${input.name}, your life path is shaped by your ${input.personalityWord} personality and ${input.currentMood} mood. 
