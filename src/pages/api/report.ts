@@ -6,17 +6,20 @@ import { UserInput, ReportData } from '../../types/user';
 
 // API route to generate and retrieve reports
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  console.log("test the request");
   const redis =  await createClient({ url: process.env.REDIS_URL }).connect();
   if (req.method === 'GET') {
     const { id } = req.query;
+    console.log(id);
     try {
-      const report = await redis.get(`report:${id}`);
-      if (!report) {
+      const reportStr = await redis.get(`report:${id}`);
+      console.log(reportStr);
+      if (!reportStr) {
         return res.status(404).json({ error: 'Report not found' });
       }
+      const report: ReportData = JSON.parse(reportStr);
       return res.status(200).json(report);
     } catch (err) {
+      console.log(err);
       return res.status(500).json({ error: 'Failed to retrieve report' });
     }
   }

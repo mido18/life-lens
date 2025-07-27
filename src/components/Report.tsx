@@ -7,6 +7,8 @@ interface ReportProps {
 
 const Report: React.FC<ReportProps> = ({ report }) => {
   // If the report is premium but sections are missing, show a friendly fallback
+  console.log("testzzz");
+  console.log(report);
   if (report.isPremium && !report.sections) {
     return (
       <div className="bg-white p-6 rounded-lg shadow-md text-red-600">

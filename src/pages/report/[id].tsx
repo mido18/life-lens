@@ -87,12 +87,19 @@ const ReportPage: NextPage<ReportPageProps> = ({ report, error }) => {
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/report?id=${params?.id}`);
+    // Pick base URL depending on environment (dev ⇒ localhost, prod ⇒ configured env var)
+    const baseUrl =
+      process.env.NODE_ENV === 'development'
+        ? 'http://localhost:3000'
+        : process.env.NEXT_PUBLIC_BASE_URL;
+
+    const response = await fetch(`${baseUrl}/api/report?id=${params?.id}`);
     console.log(response);
     if (!response.ok) {
       return { props: { error: 'Report not found' } };
     }
     const report = await response.json();
+    console.log(report);
     return { props: { report } };
   } catch (err) {
     console.log(err);
